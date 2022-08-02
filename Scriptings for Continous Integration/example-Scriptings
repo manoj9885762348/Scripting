@@ -1,0 +1,35 @@
+Pipeline {
+    agent any
+    steps{
+        stage ("Git-Clone"){
+            steps {
+                sh '''
+                #!/bin/bash
+                apt install git -y
+                git clone https://github.com/manoj9885762348/maven-web-application.git
+                    '''
+            }
+        }
+        stage ("Bulid maven package") {
+            steps {
+                sh '''
+                echo "This is 2nd stage In this stage we Bulid the target file using maven packages"
+                   '''
+            }
+        }
+        stage ("TEST using SonarQube") {
+            steps {
+                sh '''
+                echo "This is 3rd stage In this stage we test the target-file using SonarQube"
+                   '''
+            }
+        }
+        stage ("Artifactory") {
+            steps {
+                sh '''
+                echo "This is 4th stage In this stage we push jar file into jfrog Artifactory"
+                   '''
+            }
+        }
+    }
+}
